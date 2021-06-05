@@ -2,15 +2,20 @@ class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.timeFields = this.getFieldsBySelector(selector);
     this.targetDate = targetDate;
+    this.renderTimer();
     this.start();
+  }
+
+  renderTimer() {
+    const currentTime = Date.now();
+    const time = this.targetDate - currentTime;
+    const { days, hours, mins, secs } = this.getTimeComponents(time);
+    this.updateTimeFields({ days, hours, mins, secs });
   }
 
   start() {
     setInterval(() => {
-      const currentTime = Date.now();
-      const time = this.targetDate - currentTime;
-      const { days, hours, mins, secs } = this.getTimeComponents(time);
-      this.updateTimeFields({ days, hours, mins, secs });
+      this.renderTimer();
     }, 1000);
   }
 
@@ -50,5 +55,5 @@ class CountdownTimer {
 
 new CountdownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Jul 17, 2019'),
+  targetDate: new Date('Jun 16, 2021'),
 });
